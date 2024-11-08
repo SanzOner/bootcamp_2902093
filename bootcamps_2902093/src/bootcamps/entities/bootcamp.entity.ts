@@ -1,11 +1,10 @@
+import { Course } from "src/courses/entities/course.entity";
+import { Review } from "src/reviews/entities/review.entity";
 import {Entity,
+     OneToMany,
      PrimaryGeneratedColumn } from "typeorm";
 
 import { Column } from "typeorm";
-
-
-
-
 
 @Entity('bootcamps')
 export class Bootcamp {
@@ -25,12 +24,19 @@ export class Bootcamp {
     topics: string
 
     @Column('double')
-    averageRaiting: number
+    averageRating: number
 
     @Column({type: 'timestamp',
-        name: 'createAt',
+        name: 'createdAt',
         default: () => 'CURRENT_TIMESTAMP'
-})
-createAt:Date
+    })
 
+
+    createdAt:Date;
+    @OneToMany(()=> Course,(course)=>course.bootcamp)
+    courses: Course[]
+
+    @OneToMany(() => Review, (review) => review.bootcamp)
+    reviews: Review[]; 
 }
+

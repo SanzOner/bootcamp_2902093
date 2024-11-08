@@ -1,14 +1,15 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import { CreateCourseDto } from './dto/create-course.dto';
 
 @Controller('courses')
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Post()
-  create(@Body() payload: any) {
-    return this.coursesService.create(payload);
+  create(@Body() body: CreateCourseDto) {
+    return this.coursesService.create(body);
   }
 
   @Get()

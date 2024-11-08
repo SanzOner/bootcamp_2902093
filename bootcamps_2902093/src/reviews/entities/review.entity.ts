@@ -1,31 +1,21 @@
-import {Entity,
-    PrimaryGeneratedColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Bootcamp } from "src/bootcamps/entities/bootcamp.entity"; // Importa Bootcamp para la relación
 
-import { Column } from "typeorm";
-
-
-@Entity('review')
-
+@Entity('reviews')
 export class Review {
 
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
-    @Column({type: 'varchar',
-            length: 100,
-            nullable: true
-    }
-    )
-    title:string
-    
-    @Column({type: 'text',
-            nullable: false
-    }
-    )
-    comment:string
+    @Column({ type: 'varchar', length: 100, nullable: true })
+    title: string;
 
-    @Column({type: 'tinyint',
-        nullable: false
-    })
-    rating:number
+    @Column({ type: 'text', nullable: false })
+    comment: string;
+
+    @Column({ type: 'tinyint', nullable: false })
+    rating: number;
+
+    @ManyToOne(() => Bootcamp, (bootcamp) => bootcamp.reviews)
+    bootcamp: Bootcamp; 
 }

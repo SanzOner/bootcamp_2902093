@@ -1,48 +1,55 @@
-import { timestamp } from "rxjs"
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Bootcamp } from "src/bootcamps/entities/bootcamp.entity";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+
+// Definición del Enum para los niveles de habilidad
+export enum MinimumSkill {
+    Beginner = 'Beginner',
+    Intermediate = 'Intermediate',
+    Advance = 'Advance',
+}
 
 @Entity('courses')
 export class Course {
     @PrimaryGeneratedColumn()
-    id:number
+    id: number;
 
-    @Column('varchar', {length: 100})
-    title:string
+    @Column('varchar', { length: 100 })
+    title: string;
 
-    @Column('varchar', {length: 60})
-    description:string
+    @Column('varchar', { length: 60 })
+    description: string;
 
-    @Column({type: 'tinyint',
-            nullable:true,
-            default: 4
+    @Column({
+        type: 'tinyint',
+        nullable: true,
+        default: 4
     })
-    weeks:number
+    weeks: number;
 
-    @Column({type: 'decimal',
-            nullable: true
+    @Column({
+        type: 'decimal',
+        nullable: true
     })
-    tuition:number
+    tuition: number;
 
-    @Column({type: 'enum',
-            name: "minimun_skill",
-            enum:[
-                'Beginner',
-                'Intermediate',
-                'Advance']
-
+    @Column({
+        type: 'enum',
+        enum: MinimumSkill, // Uso del enum de skill mínimo
+        default: MinimumSkill.Beginner
     })
-    minimum_skill:minimumSkill
+    minimum_skill: MinimumSkill;
 
-    @Column({type: 'timestamp',
-            name: 'createAt',
-            default: () => 'CURRENT_TIMESTAMP'
+    @Column({
+        type: 'timestamp',
+        name: 'createAt',
+        default: () => 'CURRENT_TIMESTAMP'
     })
-    createAt:Date
+    createAt: Date;
+
+        // relacion con Bootcamp
+    @ManyToOne(() => Bootcamp, (bootcamp) => bootcamp.courses)
+    bootcamp: Bootcamp;
+    
 
 }
 
-enum minimumSkill{
-    'Beginner',
-    'Intermediate',
-    'Advance'
-}

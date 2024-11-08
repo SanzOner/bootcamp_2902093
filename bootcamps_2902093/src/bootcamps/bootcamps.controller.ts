@@ -8,10 +8,10 @@ export class BootcampsController {
   constructor(private readonly bootcampsService: BootcampsService) {}
 
   @Post()
-  create(@Body() payload: any ) {
+  create(@Body() body: CreateBootcampDto ) {
     //payload: sinonimo del body de la request
     //create, update
-    return this.bootcampsService.create(payload);
+    return this.bootcampsService.create(body);
   }
 
   @Get()
